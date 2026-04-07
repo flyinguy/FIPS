@@ -1,0 +1,265 @@
+[Version]
+LayoutFile=Layout.inf, Layout1.inf, Layout2.inf
+signature="$CHICAGO$"
+Class=Image
+ClassGUID={6bdd1fc6-810f-11d0-bec7-08002be2092f}
+Provider=%ToproMfg%
+DriverVer=12/18/2001,5.1.2600.0
+
+[ControlFlags]
+; All PnP devices should be excluded from manual AddDevice Applet list
+ExcludeFromSelect=*
+
+[Manufacturer]
+%ToproMfg%=Topro
+
+[DestinationDirs]
+DefaultDestDir = 10
+Topro.Files.Ext = 12
+Topro.Files.Dll = 11
+
+[SourceDisksNames]
+1=%DiskNameString%,,,""
+
+[SourceDisksFiles]
+TP6800.SYS=1
+;TPCAMD.SYS=1
+;TP6800F.AX=1
+CUSTPAGE.AX=1
+CamLib.Dll=1
+TPUSD.DLL=1
+
+[Topro]
+%USB\VID_06A2&PID_0001.DeviceDesc%=Topro.USBDCam,USB\VID_06A2&PID_0003
+
+[Topro.USBDCam]
+Include=    ks.inf, kscaptur.inf, ksfilter.inf
+Needs=      KS.Registration,KSCAPTUR.Registration,MSPCLOCK.Installation
+AddReg=     Topro.AddReg
+;CopyFiles=  Topro.Files.Ext, Topro.Files.Dll, Topro.Files.Exe
+
+;SubClass=StillImage
+;DeviceType=2
+;DeviceSubtype=1
+;;Capabilities=1
+;Capabilities=5
+;Events=Topro.StiEvents
+;DeviceData=Topro.DeviceData
+ICMProfiles="sRGB Color Space Profile.icm"
+;;VendorSetup="SetupExt.dll,SetupEntryPoint PnPIDInformation"
+
+[Topro.USBDCam.NT]
+Include=    ks.inf, kscaptur.inf, ksfilter.inf, dshowext.inf
+Needs=      KS.Registration,KSCAPTUR.Registration.NT, DSHOWEXT.Registration
+AddReg=     Topro.AddReg
+;DelReg=     Topro.DelReg
+;CopyFiles = Topro.Files.Ext, Topro.Files.Dll, Topro.Files.Exe
+
+SubClass=StillImage
+DeviceType=2
+DeviceSubtype=1
+;Capabilities=1
+Capabilities=5
+Events=Topro.StiEvents
+DeviceData=Topro.DeviceData
+ICMProfiles="sRGB Color Space Profile.icm"
+;VendorSetup="SetupExt.dll,SetupEntryPoint PnPIDInformation"
+
+[Topro.DeviceData]
+TwainDS="Topro TP6800"
+
+[Topro.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,TP6800.sys
+HKR,,OkToHibernate,3,01
+;HKR,,PageOutWhenUnopened,3,01
+;HKR,,PowerDownWhenUnopened,3,01
+;HKR,,DontSuspendIfStreamsAreRunning,3,01
+;;-------------------------------------------------------------------
+;;      0:TAS  1:PIXART_106B 2:ICM_102A
+;;-------------------------------------------------------------------
+HKLM,Software\Topro\TP6800,"SensorID",0x10001,5
+;;-------------------------------------------------------------------
+;;      0:VGA  2:CIF
+;;-------------------------------------------------------------------
+HKLM,Software\Topro\TP6800,"SensorResolution",0x10001,0
+
+;HKLM,Software\Topro\TP6800,"Brightness",0x10001,13
+;HKLM,Software\Topro\TP6800,"Contrast",0x10001,38
+;HKLM,Software\Topro\TP6800,"Hue",0x10001,50
+;HKLM,Software\Topro\TP6800,"Saturation",0x10001,50
+;HKLM,Software\Topro\TP6800,"Sharpness",0x10001,100
+;HKLM,Software\Topro\TP6800,"Gamma",0x10001,25
+;HKLM,Software\Topro\TP6800,"DefaultBrightness",0x10001,13
+;HKLM,Software\Topro\TP6800,"DefaultContrast",0x10001,38
+;HKLM,Software\Topro\TP6800,"DefaultHue",0x10001,50
+;HKLM,Software\Topro\TP6800,"DefaultSaturation",0x10001,50
+;HKLM,Software\Topro\TP6800,"DefaultSharpness",0x10001,100
+;HKLM,Software\Topro\TP6800,"DefaultGamma",0x10001,25
+
+HKLM,Software\Topro\TP6800,"VGAFrameRate",0x10001,20
+HKLM,Software\Topro\TP6800,"EdgeThreshold",0x10001,0x40
+HKLM,Software\Topro\TP6800,"FrameSizeOffset",0x10001,10
+
+HKLM,Software\Topro\TP6800,"WhiteBalance",0x10001,6500
+HKLM,Software\Topro\TP6800,"Exposure",0x10001,30
+;HKLM,Software\Topro\TP6800,"AutoWhiteBalance",0x10001,0
+HKLM,Software\Topro\TP6800,"AutoExposure",0x10001,1
+HKLM,Software\Topro\TP6800,"ImageQuality",0x10001,8
+HKLM,Software\Topro\TP6800,"AutoImageQuality",0x10001,1
+HKLM,Software\Topro\TP6800,"GammaIndex",0x10001,4
+;HKLM,Software\Topro\TP6800,"Frequency",0x10001,1
+HKLM,Software\Topro\TP6800,"WBMode",0x10001,2
+;HKLM,Software\Topro\TP6800,"MaxContrast",0x10001,1
+HKLM,Software\Topro\TP6800,"LowLightControl",0x10001,1
+HKLM,Software\Topro\TP6800,"LowLightFrameRate",0x10001,0
+HKLM,Software\Topro\TP6800,"LowLightThreshold",0x10001,4
+HKLM,Software\Topro\TP6800,"WBAdjust",0x10001,0
+;HKLM,Software\Topro\TP6800,"AEThreshold",0x10001,2
+HKLM,Software\Topro\TP6800,"FlipHorizontal",0x10001,0
+;HKLM,Software\Topro\TP6800,"DesignInTool",0x10001,0
+HKLM,Software\Topro\TP6800,"DeviceReady",0x10001,0
+HKLM,Software\Topro\TP6800,"CurrentExposure",0x10001,1000
+HKLM,Software\Topro\TP6800,"CurrentGain",0x10001,1
+HKLM,Software\Topro\TP6800,"AutodetectSensor",0x10001,0
+HKLM,Software\Topro\TP6800,"SkipBadFrame",0x10001,1
+HKLM,Software\Topro\TP6800,"BacklightCompensation",0x10001,1
+HKLM,Software\Topro\TP6800,"AWBFactor0",0x10001,0
+HKLM,Software\Topro\TP6800,"AWBFactor1",0x10001,0
+HKLM,Software\Topro\TP6800,"AWBFactor2",0x10001,0
+
+HKLM,Software\Topro\TP6800\TOPROCAP,"WantPreview",0,"1"
+HKLM,Software\Topro\TP6800\TOPROCAP,"UseFrameRate",0,"0"
+
+;HKLM,Software\Topro\TP6800\TOPROCAP,"GammaR",0,"303"
+;HKLM,Software\Topro\TP6800\TOPROCAP,"GammaG",0,"275"
+;HKLM,Software\Topro\TP6800\TOPROCAP,"GammaB",0,"272"
+;HKLM,Software\Topro\TP6800\TOPROCAP,"GammaContrast",0,"17"
+;HKLM,Software\Topro\TP6800\TOPROCAP,"GammaBrightness",0,"-73"
+;HKLM,Software\Topro\TP6800\TOPROCAP,"DefaultGammaR",0,"303"
+;HKLM,Software\Topro\TP6800\TOPROCAP,"DefaultGammaG",0,"275"
+;HKLM,Software\Topro\TP6800\TOPROCAP,"DefaultGammaB",0,"272"
+;HKLM,Software\Topro\TP6800\TOPROCAP,"DefaultGammaContrast",0,"17"
+;HKLM,Software\Topro\TP6800\TOPROCAP,"DefaultGammaBrightness",0,"-73"
+
+HKLM,Software\Topro\TP6800\TWAIN,"CAPWIDTH",0,"160"
+HKLM,Software\Topro\TP6800\TWAIN,"CAPHEIGHT",0,"120"
+HKLM,Software\Topro\TP6800\TWAIN,"FRAMESIZE",0,"1"
+HKLM,Software\Topro\TP6800\TWAIN,"FRAMECOLOR",0,"0"
+HKLM,Software\Topro\TP6800\TWAIN,"FRAMERATE",0,"15"
+HKLM,Software\Topro\TP6800\TWAIN,"ImageFile",0,""
+HKLM,Software\Topro\TP6800\TWAIN,"ImageCapIndex",0,"0"
+HKLM,Software\Topro\TP6800\TWAIN,"ImageCapNo",0,"1"
+HKLM,Software\Topro\TP6800\TWAIN,"VideoDevice",0,"0"
+HKLM,Software\Topro\TP6800\TWAIN,"AudioDevice",0,"0"
+HKLM,Software\Topro\TP6800\TWAIN,"FrameRateInterval",0,"666666"
+HKLM,Software\Topro\TP6800\TWAIN,"UseFrameRateInterval",0,"1"
+HKLM,Software\Topro\TP6800\TWAIN,"CaptureAudio",0,"1"
+HKLM,Software\Topro\TP6800\TWAIN,"WantPreview",0,"1"
+HKLM,Software\Topro\TP6800\TWAIN,"MasterStream",0,"0"
+HKLM,Software\Topro\TP6800\TWAIN,"Exposure",0,"24"
+HKLM,Software\Topro\TP6800\TWAIN,"Hue",0,"50"
+HKLM,Software\Topro\TP6800\TWAIN,"White Balance",0,"50"
+HKLM,Software\Topro\TP6800\TWAIN,"Saturation",0,"50"
+HKLM,Software\Topro\TP6800\TWAIN,"Sharpness",0,"0"
+HKLM,Software\Topro\TP6800\TWAIN,"Gamma",0,"10"
+HKLM,Software\Topro\TP6800\TWAIN,"Brighthess",0,"50"
+HKLM,Software\Topro\TP6800\TWAIN,"Contrast",0,"50"
+
+;;---------- update NetMeeting settings ------------------
+HKLM,Software\Microsoft\Conferencing\CaptureDevices\%USB\VID_06A2&PID_0001.DeviceDesc%,"dwImageSize",0x10001,0x80400440
+HKLM,Software\Microsoft\Conferencing\CaptureDevices\%USB\VID_06A2&PID_0001.DeviceDesc%,"dwNumColors",0x10001,0x00000008
+HKLM,Software\Microsoft\Conferencing\CaptureDevices\%USB\VID_06A2&PID_0001.DeviceDesc%,"dwStreamingMode",0x10001,0x00000001
+HKLM,Software\Microsoft\Conferencing\CaptureDevices\%USB\VID_06A2&PID_0001.DeviceDesc%,"dwDialogs",0x10001,0x00000002
+HKLM,Software\Microsoft\Conferencing\CaptureDefaultFormats\%USB\VID_06A2&PID_0001.DeviceDesc%,"DefaultFormat",0,"RGB, 640x480x24"
+
+
+;;---------- TP6800 property page ----------
+HKLM,System\CurrentControlSet\Control\MediaSets\{EBF121A0-64E3-11D5-B7B1-0050BAF2C073}\PropertyPages\{C97AFFA0-64E4-11D5-B7B1-0050BAF2C073},,,"TP6800 Property Page"
+HKCR,CLSID\{C97AFFA0-64E4-11D5-B7B1-0050BAF2C073}\InprocServer32,,,"%10%\system32\drivers\CUSTPAGE.AX"
+HKCR,CLSID\{C97AFFA0-64E4-11D5-B7B1-0050BAF2C073}\InprocServer32,"ThreadingModel",,"Both"
+;;---------- System property page ----------
+;HKLM,System\CurrentControlSet\Control\MediaSets\{C6E13360-30AC-11D0-A18C-00A0C9118956}\PropertyPages\{71F96464-78F3-11D0-A18C-00A0C9118956},,,
+HKLM,System\CurrentControlSet\Control\MediaSets\{C6E13370-30AC-11D0-A18C-00A0C9118956}\PropertyPages\{71F96465-78F3-11D0-A18C-00A0C9118956},,,
+
+; ** For Still Image USD driver **
+HKR,,USDClass,,"{8CCBEB81-6AEF-11d5-B70F-00055DF4E7AC}"
+HKCR,CLSID\{8CCBEB81-6AEF-11d5-B70F-00055DF4E7AC},,,%StillImageDescString%
+HKCR,CLSID\{8CCBEB81-6AEF-11d5-B70F-00055DF4E7AC}\InProcServer32,,,%11%\tpusd.dll
+HKCR,CLSID\{8CCBEB81-6AEF-11d5-B70F-00055DF4E7AC}\InProcServer32,ThreadingModel,,"Both"
+
+;HKLM,Software\Microsoft\Windows\CurrentVersion\Run,"TP6800",,%10%\tppoll.exe
+
+HKR,,CreateFileName,,%CreateDeviceNameString%
+
+[Topro.AddReg]
+HKLM,System\CurrentControlSet\Control\MediaSets\{C6E13360-30AC-11D0-A18C-00A0C9118956}\PropertyPages\{71F96464-78F3-11D0-A18C-00A0C9118956},,,
+
+[Topro.StiEvents]
+OpenApp="%OpenAppString%",{AA1F65C1-6B14-11d5-B70F-00055DF4E7AC}
+
+[Topro.USBDCam.Interfaces]
+AddInterface=%KSCATEGORY_CAPTURE%,GLOBAL,Topro.USBDCam.Interface
+
+[Topro.USBDCam.NT.Interfaces]
+AddInterface=%KSCATEGORY_CAPTURE%,GLOBAL,Topro.USBDCam.Interface
+
+[Topro.USBDCam.Interface]
+AddReg=Topro.USBDCam.Intf.AddReg
+         
+[Topro.USBDCam.Intf.AddReg]
+HKR,,CLSID,,%ProxyVCap.CLSID%
+HKR,,FriendlyName,,%USB\VID_06A2&PID_0001.DeviceDesc%
+; HKR,,ExtensionDLL,,%Topro.ExtensionDLL%
+HKR,PageAliases,"{71F96464-78F3-11d0-A18C-00A0C9118956}",1,a0,ff,7a,c9, d5,11, e1,64, 0xb7, 0xb1, 0x0, 0x50, 0xba, 0xf2, 0xc0, 0x73
+HKR,PageAliases,"{71F96465-78F3-11d0-A18C-00A0C9118956}",1,a0,ff,7a,c9, d5,11, e1,64, 0xb7, 0xb1, 0x0, 0x50, 0xba, 0xf2, 0xc0, 0x73
+
+[Topro.USBDCam.NT.Services]
+AddService = DCamUSBIntel,0x00000002,Topro.USBDCam.ServiceInstall
+
+[Topro.USBDCam.ServiceInstall]
+DisplayName   = %USB\VID_06A2&PID_0001.DeviceDesc%
+ServiceType   = %SERVICE_KERNEL_DRIVER%
+StartType     = %SERVICE_DEMAND_START%
+ErrorControl  = %SERVICE_ERROR_NORMAL%
+ServiceBinary = %10%\System32\Drivers\TP6800.sys
+
+[Topro.Files.Ext]
+TP6800.SYS
+CUSTPAGE.AX
+
+[Topro.Files.Dll]
+CamLib.Dll
+TPUSD.DLL
+;SetupExt.dll
+
+[Topro.Files.Exe]
+tppoll.exe
+
+[Strings]
+
+;----------------
+; Non-Localizable
+;----------------
+
+; note: only register value is case sensitive, key is not.
+ProxyVCap.CLSID="{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+KSCATEGORY_CAPTURE="{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+SERVICE_KERNEL_DRIVER=1
+; PnP should use demand start
+SERVICE_DEMAND_START=3
+SERVICE_ERROR_NORMAL=1
+
+; IHV's extension DLL
+; Intel.ExtensionDLL = "???.dll"
+
+;----------------
+; Localizable
+;----------------
+
+ToproMfg="YXT"
+USB\VID_06A2&PID_0001.DeviceDesc="Topro USB Video Camera"
+DiskNameString="Topro USB Video Camera Driver Disk"
+StillImageDescString="Topro USB Video Camera Still Image USD"
+CreateDeviceNameString="\\.\PCAMSTI"
+OpenAppString="Open Application"

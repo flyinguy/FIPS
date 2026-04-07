@@ -1,0 +1,254 @@
+;
+; usbcam.inf  -- Installation file for USB Web Camera
+;
+           
+[Version]
+signature="$CHICAGO$"
+LayoutFile=Layout.inf, Layout1.inf, Layout2.inf
+Class=Image
+ClassGUID={6bdd1fc6-810f-11d0-bec7-08002be2092f}
+Provider=%SOFTPROVIDER%
+DriverVer=05/25/2002,3.2.0.36
+CatalogFile=usbcam.cat
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[Manufacturer]
+%HARDPROVIDER%=Manu
+ 
+[DestinationDirs]
+DefaultDestDir=11
+Kernel.CopyFiles=10,System32\Drivers
+CustomPrp.CopyFiles=11
+TWAIN.CopyFiles=10,TWAIN_32\ZSCAM
+
+[Manu]
+%USB\VID_0AC8&PID_0301.DeviceDesc%=USBCAMERA,USB\VID_0AC8&PID_0301
+
+[USBCAMERA]
+Include=    ks.inf, kscaptur.inf, ksfilter.inf
+Needs=      KS.Registration,KSCAPTUR.Registration
+AddReg=     USBCAMERA.AddReg, USBCAMERA.Settings, CustomPrp.AddReg, TWAIN.AddReg
+CopyFiles=  Kernel.CopyFiles, CustomPrp.CopyFiles, TWAIN.CopyFiles
+
+SubClass=StillImage
+DeviceType=3
+DeviceSubType=0x1
+Capabilities=0x00000031
+DeviceData=USBCAMERA.DeviceData
+ICMProfiles="sRGB Color Space Profile.icm"
+
+[USBCAMERA.NT]
+Include=    ks.inf, kscaptur.inf, ksfilter.inf
+Needs=      KS.Registration,KSCAPTUR.Registration.NT
+AddReg=     USBCAMERA.AddReg, USBCAMERA.Settings, CustomPrp.AddReg, TWAIN.AddReg
+CopyFiles=  Kernel.CopyFiles, CustomPrp.CopyFiles, TWAIN.CopyFiles
+
+SubClass=StillImage
+DeviceType=3
+DeviceSubType=0x1
+Capabilities=0x00000031
+DeviceData=USBCAMERA.DeviceData
+ICMProfiles="sRGB Color Space Profile.icm"
+
+[USBCAMERA.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,usbcam.sys
+HKR,,PageOutWhenUnopened,3,01
+HKR,,HardwareConfig,1,1
+HKR,,USDClass,,"{0527d1d0-88c2-11d2-82c7-00c04f8ec183}"
+
+[TWAIN.AddReg]
+HKLM,"SOFTWARE\USBCAMERA\TWAIN", "DeviceName",,%USB\VID_0AC8&PID_0301.DeviceDesc%
+HKLM,"SOFTWARE\USBCAMERA\TWAIN", "DSName",,%USB\VID_0AC8&PID_0301.DeviceDesc%
+HKLM,"SOFTWARE\USBCAMERA\TWAIN", "OEM",,ZSCAM
+;Button pressed signal, for application developer 
+HKLM,"SOFTWARE\USBCAMERA\TWAIN", "SnapShotFlag",0x10001,0
+
+[CustomPrp.AddReg]
+; Custom Property Page
+HKCR,CLSID\%CLSID_CustomPropertyPage%,,,%CustomPropertyPage%
+HKCR,CLSID\%CLSID_CustomPropertyPage%\InprocServer32,,,camprp.ax
+HKCR,CLSID\%CLSID_CustomPropertyPage%\InprocServer32,ThreadingModel,,Both
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\%CLSID_CustomPropertyPage%,,,%CustomPropertyPage%
+
+; Back Door Property Page
+HKCR,CLSID\%CLSID_BackDoorPropertyPage%,,,%BackDoorPropertyPage%
+HKCR,CLSID\%CLSID_BackDoorPropertyPage%\InprocServer32,,,camprp.ax
+HKCR,CLSID\%CLSID_BackDoorPropertyPage%\InprocServer32,ThreadingModel,,Both
+HKCR,CLSID\%CLSID_BackDoorPropertyPage%\set,,,0
+ 
+; OEM Property Page
+HKCR,CLSID\%CLSID_OEMPropertyPage%,,,%OEMPropertyPage%
+HKCR,CLSID\%CLSID_OEMPropertyPage%\InprocServer32,,,camprp.ax
+HKCR,CLSID\%CLSID_OEMPropertyPage%\InprocServer32,ThreadingModel,,Both
+
+; Chinese Property Page
+HKCR,CLSID\%CLSID_ChinesePropertyPage%,,,%ChinesePropertyPage%
+HKCR,CLSID\%CLSID_ChinesePropertyPage%\InprocServer32,,,camprp.ax 
+HKCR,CLSID\%CLSID_ChinesePropertyPage%\InprocServer32,ThreadingModel,,Both
+
+; EEPROM Interface
+HKCR,CLSID\%CLSID_EEPROMInterface%,,,%EEPROMInterface%
+HKCR,CLSID\%CLSID_EEPROMInterface%\InprocServer32,,,camprp.ax
+HKCR,CLSID\%CLSID_EEPROMInterface%\InprocServer32,ThreadingModel,,Both
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\%CLSID_EEPROMInterface%,,,%EEPROMInterface%
+
+HKLM,System\CurrentControlSet\Control\MediaSets\%GUID_CustomPropertyPage%\PropertyPages\%CLSID_CustomPropertyPage%,,,%CustomPropertyPage%
+HKLM,System\CurrentControlSet\Control\MediaSets\%GUID_BackDoorPropertyPage%\PropertyPages\%CLSID_BackDoorPropertyPage%,,,%BackDoorPropertyPage%
+
+HKLM,System\CurrentControlSet\Control\MediaSets\%GUID_OEMPropertyPage%\PropertyPages\%CLSID_OEMPropertyPage%,,,%OEMPropertyPage%
+HKLM,System\CurrentControlSet\Control\MediaSets\%GUID_ChinesePropertyPage%\PropertyPages\%CLSID_ChinesePropertyPage%,,,%ChinesePropertyPage%
+
+;Divio driver has bug!
+HKCR,CLSID\{4ECEF410-31F5-11D2-AE0B-00104BC977E9},,,
+HKCR,CLSID\{4ECEF410-31F5-11D2-AE0B-00104BC977E9}\InprocServer32,,,%HARDPROVIDER%
+HKCR,CLSID\{4ECEF420-31F5-11D2-AE0B-00104BC977E9},,,
+HKCR,CLSID\{4ECEF420-31F5-11D2-AE0B-00104BC977E9}\InprocServer32,,,%HARDPROVIDER%
+HKCR,CLSID\{4ECEF430-31F5-11D2-AE0B-00104BC977E9},,,
+HKCR,CLSID\{4ECEF430-31F5-11D2-AE0B-00104BC977E9}\InprocServer32,,,%HARDPROVIDER%
+
+
+[USBCAMERA.Settings]
+;-----------------
+; Current Settings
+;-----------------
+;Standard property 
+HKR,Settings,BackLight,0x10001,0
+HKR,Settings,Hue,0x10001,11
+HKR,Settings,Brightness,0x10001,127
+HKR,Settings,Contrast,0x10001,127
+HKR,Settings,Saturation,0x10001,90
+HKR,Settings,Sharpness,0x10001,1
+HKR,Settings,WhiteBalance,0x10001,1
+HKR,Settings,Gama,0x10001,4
+HKR,Settings,ColorEnable,0x10001,1
+
+;Custom property
+HKR,Settings,AntiFlicker,0x10001,50
+HKR,Settings,AE,0x10001,1
+HKR,Settings,AHE,0x10001,1
+HKR,Settings,AE_TAGET,0x10001,128
+HKR,Settings,ME_TAGET,0x10001,300000
+HKR,Settings,BandWidth,0x10001,4
+HKR,Settings,Version,0x10001,0
+HKR,Settings,Mirro_Flip,0x10001,1
+HKR,Settings,Vertical_Flip,0x10001,1
+HKR,Settings,Cred,0x10001,120
+HKR,Settings,Cblue,0x10001,127
+
+;---------------
+; Default Settings
+;---------------
+;Standard property 
+HKR,DefaultSettings,BackLight,0x10001,0
+HKR,DefaultSettings,Hue,0x10001,11
+HKR,DefaultSettings,Brightness,0x10001,127
+HKR,DefaultSettings,Contrast,0x10001,127
+HKR,DefaultSettings,Saturation,0x10001,90
+HKR,DefaultSettings,Sharpness,0x10001,1
+HKR,DefaultSettings,WhiteBalance,0x10001,1
+HKR,DefaultSettings,Gama,0x10001,4
+HKR,DefaultSettings,ColorEnable,0x10001,1
+
+;Custom property
+HKR,DefaultSettings,AntiFlicker,0x10001,50
+HKR,DefaultSettings,AE,0x10001,1
+HKR,DefaultSettings,AHE,0x10001,1
+HKR,DefaultSettings,AE_TAGET,0x10001,128
+HKR,DefaultSettings,ME_TAGET,0x10001,300000
+HKR,DefaultSettings,BandWidth,0x10001,4
+HKR,DefaultSettings,Version,0x10001,0
+HKR,DefaultSettings,Mirro_Flip,0x10001,1
+HKR,DefaultSettings,Vertical_Flip,0x10001,1
+HKR,DefaultSettings,Cred,0x10001,120
+HKR,DefaultSettings,Cblue,0x10001,127
+HKR,DefaultSettings,TopExposureTime,0x10001,60
+HKR,DefaultSettings,SensorType,0x10001,0
+
+[USBCAMERA.Interfaces]
+AddInterface=%KSCATEGORY_CAPTURE%,GLOBAL,USBCAMERA.Interface
+
+[USBCAMERA.NT.Interfaces]
+AddInterface=%KSCATEGORY_CAPTURE%,GLOBAL,USBCAMERA.Interface
+
+[USBCAMERA.Interface]
+AddReg=USBCAMERA.Intf.AddReg
+         
+[USBCAMERA.Intf.AddReg]
+HKR,,CLSID,,%ProxyVCap.CLSID%
+HKR,,FriendlyName,,%USB\VID_0AC8&PID_0301.DeviceDesc%
+HKR,,ExtensionDLL,,camprp.dll
+
+[USBCAMERA.NT.Services]
+AddService = USBZC0301,0x00000002,USBCAMERA.ServiceInstall
+
+[USBCAMERA.ServiceInstall]
+DisplayName   = %USB\VID_0AC8&PID_0301.DeviceDesc%
+ServiceType   = %SERVICE_KERNEL_DRIVER%
+StartType     = %SERVICE_DEMAND_START%
+ErrorControl  = %SERVICE_ERROR_NORMAL%
+ServiceBinary = %10%\System32\Drivers\usbcam.sys
+
+[USBCAMERA.DeviceData] 
+Server=local
+UI DLL=sti.dll
+UI Class ID={5d8ef5a3-ac13-11d2-a093-00c04f72dc3c}
+
+[Kernel.CopyFiles]
+usbcam.sys
+
+[CustomPrp.CopyFiles]
+camprp.ax
+camprp.dll
+
+[TWAIN.CopyFiles]
+camtwn.ds
+
+[SourceDisksNames]
+1=%DiskName%,,,
+
+[SourceDisksFiles]
+usbcam.sys=1,,
+camprp.ax=1,,
+camprp.dll=1,,
+camtwn.ds=1,,
+
+[Strings]
+ProxyVCap.CLSID="{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+KSCATEGORY_CAPTURE="{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+SERVICE_KERNEL_DRIVER=1
+SERVICE_DEMAND_START=3
+SERVICE_ERROR_NORMAL=1
+ 
+;Custom Property Page
+CustomPropertyPage="Custom Property Page"
+GUID_CustomPropertyPage="{4F1A6D24-0BD1-11d5-A337-00010297D6B1}"
+CLSID_CustomPropertyPage="{4F1A6D21-0BD1-11d5-A337-00010297D6B1}"
+
+BackDoorPropertyPage="Back Door Property Page"
+GUID_BackDoorPropertyPage="{4F1A6D26-0BD1-11d5-A337-00010297D6B1}"
+CLSID_BackDoorPropertyPage="{4F1A6D22-0BD1-11d5-A337-00010297D6B1}"
+
+OEMPropertyPage="OEM Property Page"
+GUID_OEMPropertyPage="{4F1A6D28-0BD1-11d5-A337-00010297D6B1}"       
+CLSID_OEMPropertyPage="{4F1A6D27-0BD1-11d5-A337-00010297D6B1}"
+
+ChinesePropertyPage="Chinese Property Page"      
+GUID_ChinesePropertyPage="{4F1A6D29-0BD1-11d5-A337-00010297D6B1}"       
+CLSID_ChinesePropertyPage="{4F1A6D30-0BD1-11d5-A337-00010297D6B1}"
+
+EEPROMInterface="EEPROM Interface"
+CLSID_EEPROMInterface="{4F1A6D24-0BD1-11d5-A337-00010297d6b1}"
+
+;***************************************************************
+; localizable
+;***************************************************************
+
+SOFTPROVIDER = "VIMICRO"
+HARDPROVIDER = "VIMICRO"
+USB\VID_0AC8&PID_0301.DeviceDesc="USB Web Camera"
+DiskName="USB Web Camera Driver Disk"
+;***************************************************************
+

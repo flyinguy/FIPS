@@ -1,0 +1,355 @@
+;==========================================================================
+; PC Camera (SN9C102, VID=0C45&PID=602a) INF (for Windows 98/ME/2000/XP)
+; Copyright(c) 2002
+; File version: 1.0.0.25
+; Last modified: 2003-10-22
+;==========================================================================
+
+[Version]
+LayoutFile=Layout.inf, Layout1.inf, Layout2.inf
+signature="$CHICAGO$"
+Class=Image
+ClassGUID={6bdd1fc6-810f-11d0-bec7-08002be2092f}
+Provider=%SX%
+CatalogFile.NT=snphv71.cat
+DriverVer=10/22/2003,3.4.1.0
+
+[SourceDisksNames]
+1=%SrcDiskId%,,,
+
+[SourceDisksFiles] ; files for Windows 98/ME
+snphv71.sys=1,.\WIN98,
+snphv71.ds=1,,
+snphv71.ini=1,,
+snphv71.src=1,,
+dsnphv71.ax=1,,
+vsnphv71.dll=1,,
+dsnphv71.dll=1,,
+vsnphv71.exe=1,,
+dsnphv71.exe=1,,
+usnphv71.exe=1,,
+csnphv71.dll=1,,
+
+[SourceDisksFiles.x86] ; files for Windows 2000/XP
+snphv71.sys=1,.\WINXP
+snphv71.ds=1
+snphv71.ini=1
+snphv71.src=1
+dsnphv71.ax=1
+vsnphv71.dll=1
+dsnphv71.dll=1
+vsnphv71.exe=1
+dsnphv71.exe=1
+usnphv71.exe=1
+csnphv71.dll=1
+
+[DestinationDirs]
+DefaultDestDir=11,               ; LDID_SYS
+SX.USBDCam.CopyMsWdmDrivers=10,system32\drivers
+SX.USBDCam.CopyDrivers=10,system32\drivers
+SX.USBDCam.copytwain=10,twain_32\snphv71
+SX.USBDCam.copytwainIni=10,
+SN.CopySTDFiles=11,
+SN.CopyVfwExt=11,
+SN.CopySnapViewer=10,
+SN.CopyUninstall=10,
+
+[Manufacturer]
+%SXTIMfg%=SN
+
+[SN]
+%USB\VID_0c45&PID_602a.DeviceDesc%=SX.USBDCam,USB\VID_0c45&PID_602a
+
+[SX.USBDCam]
+DriverVer=10/22/2003,3.4.1.0
+Include=ks.inf,kscaptur.inf,ksfilter.inf
+Needs=KS.Registration,KSCAPTUR.Registration,MSPCLOCK.Installation
+AddReg=SX.USBDCam.AddReg,SX.USBCam.default.AddReg,SX.USBCam.Uninstall.AddReg,SX.USBDCam.Intf.AddReg
+CopyFiles=SX.USBDCam.CopyMsWdmDrivers
+SubClass=StillImage
+DeviceType=2
+DeviceSubType=0x1
+Capabilities=1
+Events=SNUSD.Events
+DeviceData=SN.DeviceData
+ICMProfiles="sRGB Color Space Profile.icm"
+
+[SX.USBDCam.NT]
+DriverVer=10/22/2003,3.4.1.0
+Include=ks.inf,kscaptur.inf,ksfilter.inf
+Needs=KS.Registration,KSCAPTUR.Registration.NT,MSPCLOCK.Installation
+AddReg=SX.USBDCam.AddReg,SX.USBCam.default.AddReg,SX.USBCam.Uninstall.AddReg,SX.USBDCam.Intf.AddReg
+CopyFiles=SX.USBDCam.CopyDrivers,SN.CopyVfwExt,SX.USBDCam.copytwain,SX.USBDCam.copytwainIni,SX.USBDcam.copyuninstall,SN.CopySTDFiles,SN.CopySnapViewer,SN.CopyUninstall
+SubClass=StillImage
+DeviceType=3 ;Video Capture : 3, Camera : 2, 2003-01-08 Peter Yang
+DeviceSubType=0x1
+Capabilities=1
+Events=SNUSD.Events
+DeviceData=SN.DeviceData
+ICMProfiles="sRGB Color Space Profile.icm"
+
+[SX.USBDCam.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,snphv71.sys
+HKR,,PageOutWhenUnopened,3,00
+;HKR,,DontSuspendIfStreamsAreRunning,3,01
+HKR,,OkToHibernate,3,01 ;2003-02-21 
+
+HKR,,HardwareConfig,1,1
+HKR,,USDClass,,"{C373ECB2-240F-4f8e-B2CA-6C5C7FD551FB}"
+HKCR,CLSID\{C373ECB2-240F-4f8e-B2CA-6C5C7FD551FB},,,"STI Camera USD"
+HKCR,CLSID\{C373ECB2-240F-4f8e-B2CA-6C5C7FD551FB}\InProcServer32,,,%11%\dsnphv71.dll
+HKCR,CLSID\{C373ECB2-240F-4f8e-B2CA-6C5C7FD551FB}\InProcServer32,ThreadingModel,,"Apartment"
+HKR,,CreateFileName,,"USB"
+
+HKCR,CLSID\{F14E1340-789E-11d6-B1D0-0010B5AF44D4},,,%PlugIn_CustomCameraProp%
+HKCR,CLSID\{F14E1340-789E-11d6-B1D0-0010B5AF44D4}\InprocServer32,,,dsnphv71.ax
+HKCR,CLSID\{F14E1340-789E-11d6-B1D0-0010B5AF44D4}\InprocServer32,ThreadingModel,,Both
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{F14E1340-789E-11d6-B1D0-0010B5AF44D4},,,%PlugIn_CustomCameraProp%
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{F14E1340-789E-11d6-B1D0-0010B5AF44D4},IID,1,40,13,4E,F1, 9E,78, d6,11, 0xB1, 0xD0, 0x00, 0x10, 0xB5, 0AF, 0x44, 0xD4
+HKCR,CLSID\{825EEA80-789F-11d6-B1D0-0010B5AF44D4},,,%PropPage_CustomCameraProp%
+HKCR,CLSID\{825EEA80-789F-11d6-B1D0-0010B5AF44D4}\InprocServer32,,,dsnphv71.ax
+HKCR,CLSID\{825EEA80-789F-11d6-B1D0-0010B5AF44D4}\InprocServer32,ThreadingModel,,Both
+HKLM,System\CurrentControlSet\Control\MediaSets\{F14E1340-789E-11d6-B1D0-0010B5AF44D4}\PropertyPages\{825EEA80-789F-11d6-B1D0-0010B5AF44D4},,,%PropPage_CustomCameraProp%
+
+HKLM,%RunOncePath%,"SNPHV71",,"rundll32.exe %11%\csnphv71.dll,DoShellExecute %10%\vsnphv71.exe"
+;HKLM,%RunOncePath%,"SNPHV71-2",,"rundll32.exe %11%\csnphv71.dll,CreateAutorunShortcut VSNPHV71,%10%\vsnphv71.exe"
+HKLM,%RunPath%,"SNPHV71",,"%10%\vsnphv71.exe"
+
+[SX.USBCam.Uninstall.AddReg]
+;HKLM,"%UninstallRegistryPath%","DisplayName",0x00000000,"%USB\VID_0c45&PID_602a.DeviceDesc%"
+;HKLM,"%UninstallRegistryPath%","UninstallString",0x00000000,"%10%\usnphv71.exe"
+
+[SN.DeviceData]
+TwainDS="%USB\VID_0c45&PID_602a.DeviceDesc%"
+
+[SNUSD.Events]
+SnapShotChanged="%SnapShotChanged%",{C521D18C-C5ED-431a-8CA3-916732DF7658},*
+
+[SX.USBDCam.CopyMsWdmDrivers]
+stream.sys
+
+[SX.USBDCam.CopyDrivers]
+snphv71.sys
+
+[SX.USBDCam.copytwain]
+snphv71.ds
+
+[SX.USBDCam.copytwainIni]
+snphv71.ini
+snphv71.src
+
+[SN.CopySTDFiles]
+dsnphv71.dll
+
+[SX.USBDCam.copyuninstall]
+
+[SN.CopyVfwExt]
+dsnphv71.ax
+vsnphv71.dll,,,4
+csnphv71.dll
+
+[SN.CopySnapViewer]
+vsnphv71.exe
+
+[SN.CopyUninstall]
+dsnphv71.exe
+usnphv71.exe
+
+[SX.USBDCam.Interfaces]
+AddInterface=%KSCATEGORY_CAPTURE%,GLOBAL,SX.USBDCam.Interface
+
+[SX.USBDCam.NT.Interfaces]
+AddInterface=%KSCATEGORY_CAPTURE%,GLOBAL,SX.USBDCam.Interface
+
+[SX.USBDCam.Interface]
+AddReg=SX.USBDCam.Intf.AddReg
+
+[SX.USBCam.default.AddReg]
+HKLM,"Software%SettingRegistryPath%",DriverDesc,0x00000000,%USB\VID_0c45&PID_602a.DeviceDesc%
+HKLM,"Software%SettingRegistryPath%\SW"
+
+HKLM,"Software%RegistryPath%",S001,0x00010001,1
+HKLM,"Software%RegistryPath%",V001,0x00010001,0
+HKLM,"Software%RegistryPath%",A001,0x00010001,2
+HKLM,"Software%RegistryPath%",A002,0x00010001,3
+HKLM,"Software%RegistryPath%",A003,0x00010001,15
+HKLM,"Software%RegistryPath%",A004,0x00010001,12
+HKLM,"Software%RegistryPath%",A005,0x00010001,2
+HKLM,"Software%RegistryPath%",A006,0x00010001,2
+HKLM,"Software%RegistryPath%",A007,0x00010001,9
+HKLM,"Software%RegistryPath%",A008,0x00010001,7
+HKLM,"Software%RegistryPath%",E001,0x00010001,7271040
+HKLM,"Software%RegistryPath%",E002,0x00010001,62
+HKLM,"Software%RegistryPath%",E003,0x00010001,97
+HKLM,"Software%RegistryPath%",E004,0x00010001,2423680
+HKLM,"Software%RegistryPath%",E005,0x00010001,35
+HKLM,"Software%RegistryPath%",E006,0x00010001,64
+HKLM,"Software%RegistryPath%",E007,0x00010001,250
+HKLM,"Software%RegistryPath%",E008,0x00010001,100
+HKLM,"Software%RegistryPath%",E009,0x00010001,0
+HKLM,"Software%RegistryPath%",E010,0x00010001,32
+HKLM,"Software%RegistryPath%",E011,0x00010001,2000
+HKLM,"Software%RegistryPath%",E012,0x00010001,1000
+HKLM,"Software%RegistryPath%",I001,0x00010001,0
+HKLM,"Software%RegistryPath%",I002,0x00010001,1
+HKLM,"Software%RegistryPath%",R001,0x00010001,0
+HKLM,"Software%RegistryPath%",U003,0x00010001,60 ;50 ; 2002-12-26
+HKLM,"Software%RegistryPath%",U004,0x00010001,0 ; 2002-12-26
+HKLM,"Software%RegistryPath%",U007,0x00010001,8 ; 2003-03-31
+HKLM,"Software%RegistryPath%",U008,0x00010001,0 ; 2003-03-31
+HKLM,"Software%RegistryPath%",U009,0x00010001,32 ; 2003-03-31
+HKLM,"Software%RegistryPath%",U010,0x00010001,0 ; 2003-08-11
+HKLM,"Software%RegistryPath%",U011,0x00010001,1000 ; 2003-08-11
+HKLM,"Software%RegistryPath%",U012,0x00010001,0 ; 2003-08-11
+HKLM,"Software%RegistryPath%",U013,0x00010001,0 ; 2003-08-11
+; Default Color parameters
+HKLM,"%DefaultSettingPath%",C0000,0x00010001,2
+HKLM,"%DefaultSettingPath%",C0001,0x00010001,5
+HKLM,"%DefaultSettingPath%",C0002,0x00010001,5
+HKLM,"%DefaultSettingPath%",C0003,0x00010001,0
+HKLM,"%DefaultSettingPath%",C0004,0x00010001,0
+HKLM,"%DefaultSettingPath%",C0005,0x00010001,0
+HKLM,"%DefaultSettingPath%",C0006,0x00010001,0
+HKLM,"%DefaultSettingPath%",C0007,0x00010001,261
+HKLM,"%DefaultSettingPath%",C0008,0x00010001,350
+HKLM,"%DefaultSettingPath%",C0009,0x00010001,700
+HKLM,"%DefaultSettingPath%",C0010,0x00010001,1
+HKLM,"%DefaultSettingPath%",C0011,0x00010001,1
+HKLM,"%DefaultSettingPath%",C0012,0x00010001,2130000
+HKLM,"%DefaultSettingPath%",C0013,0x00010001,4000
+HKLM,"%DefaultSettingPath%",C0014,0x00010001,250
+HKLM,"%DefaultSettingPath%",C0015,0x00010001,232
+HKLM,"%DefaultSettingPath%",C0016,0x00010001,10
+HKLM,"%DefaultSettingPath%",C0017,0x00010001,144
+HKLM,"%DefaultSettingPath%",C0018,0x00010001,148
+HKLM,"%DefaultSettingPath%",C0019,0x00010001,118
+HKLM,"%DefaultSettingPath%",C0020,0x00010001,148
+HKLM,"%DefaultSettingPath%",C0021,0x00010001,68
+HKLM,"%DefaultSettingPath%",C0022,0x00010001,12000
+HKLM,"%DefaultSettingPath%",C0023,0x00010001,7300
+HKLM,"%DefaultSettingPath%",C0024,0x00010001,14000
+HKLM,"%DefaultSettingPath%",C0025,0x00010001,8500
+HKLM,"%DefaultSettingPath%",C0026,0x00010001,148
+HKLM,"%DefaultSettingPath%",C0027,0x00010001,118
+HKLM,"%DefaultSettingPath%",C0028,0x00010001,188
+HKLM,"%DefaultSettingPath%",C0029,0x00010001,108
+HKLM,"%DefaultSettingPath%",C0030,0x00010001,12000
+HKLM,"%DefaultSettingPath%",C0031,0x00010001,7300
+HKLM,"%DefaultSettingPath%",C0032,0x00010001,14000
+HKLM,"%DefaultSettingPath%",C0033,0x00010001,8500
+HKLM,"%DefaultSettingPath%",C0034,0x00010001,248
+HKLM,"%DefaultSettingPath%",C0035,0x00010001,68
+HKLM,"%DefaultSettingPath%",C0036,0x00010001,168
+HKLM,"%DefaultSettingPath%",C0037,0x00010001,88
+HKLM,"%DefaultSettingPath%",C0038,0x00010001,16000
+HKLM,"%DefaultSettingPath%",C0039,0x00010001,5699
+HKLM,"%DefaultSettingPath%",C0040,0x00010001,16000
+HKLM,"%DefaultSettingPath%",C0041,0x00010001,6500
+HKLM,"%DefaultSettingPath%",C0042,0x00010001,188
+HKLM,"%DefaultSettingPath%",C0043,0x00010001,108
+HKLM,"%DefaultSettingPath%",C0044,0x00010001,158
+HKLM,"%DefaultSettingPath%",C0045,0x00010001,118
+HKLM,"%DefaultSettingPath%",C0046,0x00010001,14000
+HKLM,"%DefaultSettingPath%",C0047,0x00010001,7300
+HKLM,"%DefaultSettingPath%",C0048,0x00010001,14000
+HKLM,"%DefaultSettingPath%",C0049,0x00010001,8500
+HKLM,"%DefaultSettingPath%",C0050,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0051,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0052,0x00010001,2
+HKLM,"%DefaultSettingPath%",C0053,0x00010001,1
+HKLM,"%DefaultSettingPath%",C0054,0x00010001,0
+HKLM,"%DefaultSettingPath%",C0055,0x00010001,0
+HKLM,"%DefaultSettingPath%",C0056,0x00010001,0
+HKLM,"%DefaultSettingPath%",C0057,0x00010001,4850
+HKLM,"%DefaultSettingPath%",C0058,0x00010001,10400
+HKLM,"%DefaultSettingPath%",C0059,0x00010001,10400
+HKLM,"%DefaultSettingPath%",C0060,0x00010001,10400
+HKLM,"%DefaultSettingPath%",C0061,0x00010001,1250000
+HKLM,"%DefaultSettingPath%",C0062,0x00010001,12500
+HKLM,"%DefaultSettingPath%",C0063,0x00010001,8200
+HKLM,"%DefaultSettingPath%",C0064,0x00010001,1
+HKLM,"%DefaultSettingPath%",C0065,0x00010001,1
+HKLM,"%DefaultSettingPath%",C0066,0x00010001,255
+HKLM,"%DefaultSettingPath%",C0067,0x00010001,1800000
+HKLM,"%DefaultSettingPath%",C0068,0x00010001,13000
+HKLM,"%DefaultSettingPath%",C0069,0x00010001,10500
+HKLM,"%DefaultSettingPath%",C0070,0x00010001,5000
+HKLM,"%DefaultSettingPath%",C0071,0x00010001,5000
+HKLM,"%DefaultSettingPath%",C0072,0x00010001,5000
+HKLM,"%DefaultSettingPath%",C0073,0x00010001,10800
+HKLM,"%DefaultSettingPath%",C0074,0x00010001,5000
+HKLM,"%DefaultSettingPath%",C0075,0x00010001,5000
+HKLM,"%DefaultSettingPath%",C0076,0x00010001,5000
+HKLM,"%DefaultSettingPath%",C0077,0x00010001,10500
+HKLM,"%DefaultSettingPath%",C0078,0x00010001,2730000
+HKLM,"%DefaultSettingPath%",C0079,0x00010001,2740000
+HKLM,"%DefaultSettingPath%",C0080,0x00010001,2740000
+HKLM,"%DefaultSettingPath%",C0081,0x00010001,600000
+HKLM,"%DefaultSettingPath%",C0082,0x00010001,150000
+HKLM,"%DefaultSettingPath%",C0083,0x00010001,6000
+HKLM,"%DefaultSettingPath%",C0084,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0085,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0086,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0087,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0088,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0089,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0090,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0091,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0092,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0093,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0094,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0095,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0096,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0097,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0098,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0099,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0100,0x00010001,10000
+HKLM,"%DefaultSettingPath%",C0101,0x00010001,1500
+HKLM,"%DefaultSettingPath%",C0102,0x00010001,100
+HKLM,"%DefaultSettingPath%",C0103,0x00010001,1
+HKLM,"%DefaultSettingPath%",C0104,0x00010001,8300
+HKLM,"%DefaultSettingPath%",C0105,0x00010001,5000
+
+[SX.USBDCam.Intf.AddReg]
+HKR,,CLSID,,%ProxyVCap.CLSID%
+HKR,,FriendlyName,,%USB\VID_0c45&PID_602a.DeviceDesc%
+HKR,,ExtensionDLL,,%SN.ExtensionDLL%
+
+[SX.USBDCam.NT.Services]
+AddService=SNPHV71,0x00000002,SX.USBDCam.ServiceInstall
+
+[SX.USBDCam.ServiceInstall]
+DisplayName=%USB\VID_0c45&PID_602a.DeviceDesc%
+ServiceType=%SERVICE_KERNEL_DRIVER%
+StartType=%SERVICE_DEMAND_START%
+ErrorControl=%SERVICE_ERROR_NORMAL%
+ServiceBinary=%12%\snphv71.sys
+
+[Strings]
+ProxyVCap.CLSID="{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+KSCATEGORY_CAPTURE="{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+SERVICE_KERNEL_DRIVER=1
+; PnP should use demand start
+SERVICE_DEMAND_START=3
+SERVICE_ERROR_NORMAL=1
+
+;----------------
+; Localizable
+;----------------
+CameraClassName="Camera device"
+SX="Sonix"
+SXTIMfg=""
+USB\VID_0c45&PID_602a.DeviceDesc="PC Camera (602a VGA)"
+RegistryPath="\Sonix\PCCAM\SNPHV71\COLOR"
+RegistryKey="VID_0c45&PID_602a"
+DefaultSettingPath="SOFTWARE\Sonix\PCCAM\SNPHV71\COLOR_PARAMS"
+SN.ExtensionDLL="vsnphv71"
+SettingRegistryPath="\Sonix\PCCAM\SNPHV71"
+RunOncePath="SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce"
+RunPath="SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+UninstallRegistryPath="Software\Microsoft\Windows\CurrentVersion\Uninstall\SNPHV71"
+SnapShotChanged="SnapShot Changed Event"
+PropPage_CustomCameraProp="Custom Camera Property Page"
+PlugIn_CustomCameraProp="WDM Custom ICustomCamera Interface handler"
+SrcDiskId="PCCam Installation Disk"

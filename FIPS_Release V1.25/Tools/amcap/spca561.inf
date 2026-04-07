@@ -1,0 +1,314 @@
+;
+; Copyright (c) 2002 Sunplus Technology 
+; SPCA561.INF  -- This file contains installation information for SPCA561
+;   Video Capture Device
+;               
+'*** OS: Windows 98SE/2000/ME/XP
+
+[Version]
+LayoutFile=Layout.inf, Layout1.inf, Layout2.inf
+signature="$CHICAGO$"
+Class=Image
+ClassGUID={6bdd1fc6-810f-11d0-bec7-08002be2092f}
+Provider=%Sunplus%
+DriverVer=08/22/2002,1.0.4.8
+
+;--- For digitally signed catalog files use ---
+CatalogFile=sp561xp.cat
+
+[CA561.DeviceData]
+Server=local
+UI DLL=sti.dll
+UI Class ID={5d8ef5a3-ac13-11d2-a093-00c04f72dc3c}
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[Manufacturer]
+%SunplusMfg%=Sunplus
+
+[DestinationDirs]
+DefaultDestDir=11
+CA561.CopySystem=10,system32\drivers
+CA561.CopyDrivers=10,system32\drivers
+CA561.CopyDLL=11
+CA561.CopyTwain=10,twain_32\ca561a
+CA561.CopyIni=10
+
+[SourceDisksFiles]
+SPCA561.SYS=1
+Dshow508.AX=1
+;SPCA561.INI=1
+;Mark following files for Logo issue
+;TW561A.DS=1
+;TW561A.INI=1
+;TW561A.SRC=1
+
+[SourceDisksNames]
+;--- For driver path use ---
+1=%SUNPLUS_DISK%,,,,
+
+;---------------------------------------------------------------
+;                S U N P L U S
+;
+;               S P C A 5 6 1 A
+;---------------------------------------------------------------
+[Sunplus]
+%CA561.DeviceDesc%=CA561.Device,USB\VID_04fc&PID_0561
+
+
+[CA561.Device]
+Include=ks.inf,kscaptur.inf,ksfilter.inf
+Needs=KS.Registration,KSCAPTUR.Registration
+DelReg=CA561.DelReg
+AddReg=CA561.AddReg,CA561.Uninstall.AddReg,PlugIns,Filters
+UpdateInis=CA561.UpdateInis
+CopyFiles=CA561.CopyDrivers,CA561.CopyTwain,CA561.CopyIni,CA561.CopySystem,Filters.Files
+
+SubClass=StillImage
+DeviceType=3
+DeviceSubType=0x1
+Capabilities=0x00000001
+DeviceData=CA561.DeviceData
+ICMProfiles="sRGB Color Space Profile.icm"
+
+[CA561.Device.NT]
+Include=ks.inf,kscaptur.inf,ksfilter.inf
+Needs=KS.Registration,KSCAPTUR.Registration.NT
+DelReg=CA561.DelReg
+AddReg=CA561.AddReg,CA561.Uninstall.AddReg.NT,PlugIns,Filters
+UpdateInis=CA561.UpdateInis
+CopyFiles=CA561.CopyDrivers,CA561.CopyTwain,CA561.CopyIni,CA561.CopySystem,Filters.Files
+
+SubClass=StillImage
+DeviceType=3
+DeviceSubType=0x1
+Capabilities=0x00000001
+DeviceData=CA561.DeviceData
+ICMProfiles="sRGB Color Space Profile.icm"
+
+;-------------------------------------------------------------
+;      A d d R e g
+;-------------------------------------------------------------
+[CA561.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,SPCA561.SYS
+HKR,,PageOutWhenUnopened,3,01
+;HKR,,PowerDownWhenUnopened,3,01
+HKR,,DontSuspendIfStreamsAreRunning,3,01
+HKR,,HardwareConfig,1,1
+HKR,,USDClass,,"{0527d1d0-88c2-11d2-82c7-00c04f8ec183}"
+HKR,,OkToHibernate,3,01
+
+;[HKEY_LOCAL_MACHINE\SOFTWARE\CA561A\UCAM]
+HKLM,Software\CA561A\Ucam,"TWAIN Use Button",0x10001,00,00,00,00
+;the name of TWAIN data source
+HKLM,Software\CA561A\Ucam,"ProductName",0,"USB PC CAMERA"
+;if SnapMethod=1, this key value will be changed. Ap can check if h/w sanp button is pressed. 
+HKLM,Software\CA561A\Ucam,"SnapshotButton",0x10001,00
+HKLM,Software\CA561A\Ucam,"SnapImageWidth",0x10001,00
+HKLM,Software\CA561A\Ucam,"SnapImageHeight",0x10001,00
+
+;[HKEY_LOCAL_MACHINE\SOFTWARE\CA561A\CA500ACONTROL]
+;SnapMethod=0: COM, 1:Registry(No save), 2: Registry (save)
+HKLM,Software\CA561A\CA500ACONTROL,"SnapMethod",0x10001,0
+;EnableAE=0: AE off, 1: 50Hz, 2:60Hz; 3:outdoor.
+HKLM,Software\CA561A\CA500ACONTROL,"EnableAE",0x10001,3
+;AEMethod (for high light):0:disable, 1:enable
+HKLM,Software\CA561A\CA500ACONTROL,"AEMethod",0x10001,0
+;SensorType=0: NoEE(disable bad pixel function), 1:EE (Enable Bad pixel compensation), 2: MP(Rawdata)
+HKLM,Software\CA561A\CA500ACONTROL,"SensorType",0x10001,0x1
+;Interface(Bandwidth):0: high,1:Middle,2:Low
+HKLM,Software\CA561A\CA500ACONTROL,"Interface",0x10001,0x0
+;AWB initial value(0x8611~0x8614,0x8651~0x8654)
+HKLM,Software\CA561A\CA500ACONTROL,"Rgain",0x10001,67
+HKLM,Software\CA561A\CA500ACONTROL,"Grgain",0x10001,64
+HKLM,Software\CA561A\CA500ACONTROL,"Bgain",0x10001,83
+HKLM,Software\CA561A\CA500ACONTROL,"Gbgain",0x10001,64
+HKLM,Software\CA561A\CA500ACONTROL,"Roffset",0x10001,0
+HKLM,Software\CA561A\CA500ACONTROL,"Groffset",0x10001,253
+HKLM,Software\CA561A\CA500ACONTROL,"Boffset",0x10001,3
+HKLM,Software\CA561A\CA500ACONTROL,"Gboffset",0x10001,0
+;0x00050005=327685
+HKLM,Software\CA561A\CA500ACONTROL,"IlluminateType",0x10001,327685
+;DisplayMode:0x00:v=0,h=0,0x01:v=1,h=0, 16(0x10):v=0,h=1,17(0x11)v=1,h=1
+HKLM,Software\CA561A\CA500ACONTROL,"DisplayMode",0x10001,0
+;MiniGain:0:2.5x,1:2x,2:1.5x
+HKLM,Software\CA561A\CA500ACONTROL,"MiniGain",0x10001,1
+;VID must be the same with addresss 2 of eeprom. if the camera has EEPROM. 0x0100=256
+HKLM,Software\CA561A\CA500ACONTROL,"VID",0x10001,256
+;PrvAE must be the same as Enable AE
+HKLM,Software\CA561A\CA500ACONTROL,"PrvAE",0x10001,3
+;AWBspeed: Do AWB frequency. value:4~8
+HKLM,Software\CA561A\CA500ACONTROL,"AWBspeed",0x10001,8
+;EnableContrast=1: enable, 0:disable 
+HKLM,Software\CA561A\CA500ACONTROL,"EnableContrast",0x10001,1
+
+;Current Setting
+HKLM,Software\CA561A\VIDEOPROCAMP,"Brightness",0x10001,10
+HKLM,Software\CA561A\VIDEOPROCAMP,"Contrast",0x10001,10
+HKLM,Software\CA561A\VIDEOPROCAMP,"Hue",0x10001,4
+HKLM,Software\CA561A\VIDEOPROCAMP,"Saturation",0x10001,1
+HKLM,Software\CA561A\VIDEOPROCAMP,"Sharpness",0x10001,4
+HKLM,Software\CA561A\VIDEOPROCAMP,"Gamma",0x10001,3
+HKLM,Software\CA561A\VIDEOPROCAMP,"Whitebalance",0x10001,1
+;Not Used
+;HKLM,Software\CA561A\VIDEOPROCAMP,"DefaultBrightness",0x10001,10
+;HKLM,Software\CA561A\VIDEOPROCAMP,"DefaultContrast",0x10001,0x20
+;HKLM,Software\CA561A\VIDEOPROCAMP,"DefaultHue",0x10001,0x00
+;HKLM,Software\CA561A\VIDEOPROCAMP,"DefaultSaturation",0x10001,0x20
+;HKLM,Software\CA561A\VIDEOPROCAMP,"DefaultSharpness",0x10001,3
+;HKLM,Software\CA561A\VIDEOPROCAMP,"DefaultGamma",0x10001,1
+;HKLM,Software\CA561A\VIDEOPROCAMP,"DefaultWhitebalance",0x10001,1
+
+HKLM,Software\CA561A\HWSTATE,"HwState",0x10001,0
+
+[CA561.Uninstall.AddReg]
+;HKLM,%UIF%,DisplayName,,%CA561.DeviceDesc%
+;HKLM,%UIF%,UninstallString,,"Rundll32 advpack.dll,LaunchINFSectionEx %10%\Spca561.ini, DefaultUnInstall"
+
+[CA561.Uninstall.AddReg.NT]
+;HKLM,%UIF%,DisplayName,,%CA561.DeviceDesc%
+;HKLM,%UIF%,UninstallString,,"Rundll32 advpack.dll,LaunchINFSectionEx %10%\Spca561.ini, DefaultUnInstall"
+
+;-------------------------------------------------------------
+;      D e l R e g
+;-------------------------------------------------------------
+[CA561.DelReg]
+HKLM,SOFTWARE\ca561a
+
+;-------------------------------------------------------------
+;      C o p y F i l e s
+;-------------------------------------------------------------
+[CA561.CopyDrivers]
+SPCA561.SYS
+
+;[CA561.CopyDLL]
+;DSEXT561.AX
+
+[CA561.CopyTwain]
+;mark these file for Logo issue
+;TW561A.DS
+
+[CA561.CopyIni]
+;SPCA561.INI
+;mark these file for Logo issue
+;TW561A.INI
+;TW561A.SRC
+
+[CA561.CopySystem]
+;USBCAMD.SYS
+;Mark following files for Logo issue
+STREAM.SYS,,,16
+
+;-------------------------------------------------------------
+;      U p d a t e I n i F i l e s
+;-------------------------------------------------------------
+[CA561.UpdateInis]
+;system.ini,drivers32,,"VIDC.IYUV=IYUV_32.DLL"
+;for win98 1st
+system.ini,drivers32,,"VIDC.I420=MSH263.DRV"
+
+;-------------------------------------------------------------
+;      I n t e r f a c e s  -- for active movie
+;-------------------------------------------------------------
+[CA561.Device.Interfaces]
+AddInterface=%KSCATEGORY_CAPTURE%,GLOBAL,VideoCapture
+
+[CA561.Device.NT.Interfaces]
+AddInterface=%KSCATEGORY_CAPTURE%,GLOBAL,VideoCapture
+
+[VideoCapture]
+AddReg=VideoCapture.AddReg
+
+[VideoCapture.AddReg]
+HKR,,CLSID,,%ProxyVCap.CLSID%
+HKR,,FriendlyName,,%CA561.Capture%
+;HKR,,ExtensionDLL,,%CA561.ExtensionDLL%
+
+;HKR,PageAliases,"{71F96464-78F3-11d0-A18C-00A0C9118956}",1,46,65,E4,EC,6B,36, d6,11, 0x86, 0xa6, 0x0, 0x50, 0xba, 0x02, 0x59, 0xa2
+
+[CA561.Device.Services]
+AddService = CA561,0x00000002,CA561.ServiceInstall
+
+[CA561.Device.NT.Services]
+AddService = CA561,0x00000002,CA561.ServiceInstall
+
+[CA561.ServiceInstall]
+DisplayName=%CA561.DeviceDesc%
+ServiceType=%SERVICE_KERNEL_DRIVER%
+StartType=%SERVICE_DEMAND_START%
+ErrorControl=%SERVICE_ERROR_NORMAL%
+ServiceBinary=%10%\System32\Drivers\SPCA561.SYS
+
+;---------------------------------------------------------------
+;                D s h e x t 
+;---------------------------------------------------------------
+[Filters.Files]
+dshow508.ax
+
+[PlugIns]
+HKCR,CLSID\%GUID_AX1%,,,%PlugIn_CustomCameraProp%
+HKCR,CLSID\%GUID_AX1%\InprocServer32,,,dshow508.ax
+HKCR,CLSID\%GUID_AX1%\InprocServer32,ThreadingModel,,Both
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\%GUID_AX1%,,,%PlugIn_CustomCameraProp%
+;HKLM,System\CurrentControlSet\Control\MediaInterfaces\%GUID_AX1%,IID,1,86,2D,5B,CD, B5,25, D4,11, 0x86, 0xA1, 0x0, 0x60, 0x67, 0x34, 0x87, 0xB7
+;the same with spca508a
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\%GUID_AX1%,IID,1,C1,94,72,48, F7,2C, d4,11, 0x8C, 0x55, 0x0, 0x60, 0x67, 036, 0x03, 0x7C
+
+
+; CustomCamera Property Page
+HKCR,CLSID\%GUID_AX2%,,,%PropPage_CustomCameraProp%
+HKCR,CLSID\%GUID_AX2%\InprocServer32,,,dshow508.ax
+HKCR,CLSID\%GUID_AX2%\InprocServer32,ThreadingModel,,Both
+HKLM,System\CurrentControlSet\Control\MediaSets\%GUID_AX2%,,,%PropPage_CustomCameraProp%
+HKLM,System\CurrentControlSet\Control\MediaSets\%GUID_AX1%\PropertyPages\%GUID_AX2%,,,%PropPage_CustomCameraProp%
+
+; VideoProcAmp Property Page 
+;HKCR,CLSID\%GUID_AX3%,,,%PropPage_CustomVideoProcAmp%
+;HKCR,CLSID\%GUID_AX3%\InprocServer32,,,dsext561.ax
+;HKCR,CLSID\%GUID_AX3%\InprocServer32,ThreadingModel,,Both
+
+
+;---------------------------------------------------------------
+;                S t r i n g s
+;---------------------------------------------------------------
+[Strings]
+
+;----------------
+; Dshext
+;----------------
+PropPage_CustomCameraProp="Custom Camera Property Page"
+PlugIn_CustomCameraProp= " WDM Custom ICustomCamera Interface handler"
+
+;----------------
+; Non-Localizable
+;----------------
+SERVICE_KERNEL_DRIVER=1
+SERVICE_AUTO_START=2
+; PnP should use demand start
+SERVICE_DEMAND_START=3
+SERVICE_ERROR_NORMAL=1
+ProxyVCap.CLSID="{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+KSCATEGORY_CAPTURE="{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+;GUID_AX1="{CD5B2D86-25B5-11D4-86A1-0060673487B7}"
+;GUID_AX2="{CD5B2D84-25B5-11D4-86A1-0060673487B7}"
+;the same with spca508a
+GUID_AX1="{487294C1-2CF7-11d4-8C55-00606736037C}"
+GUID_AX2="{71508181-2CF8-11d4-8C55-00606736037C}"
+;GUID_AX3="{ECE46546-366B-11d6-86A6-0050BA0259A2}"
+
+; IHV's extension DLL
+;SUNPLUS.ExtensionDLL="VFW508A.DLL"
+
+Sunplus              = "Sunplus"
+SunplusMfg           = "Sunplus"
+CA561.DeviceDesc   = "ICatch (VI) PC Camera"
+CA561.Capture      = "ICatch (VI) PC Camera"
+
+
+;----------------
+; Localizable
+;----------------
+;UIF="Software\Microsoft\Windows\CurrentVersion\Uninstall\Ca561 PC Camera"
+SUNPLUS_DISK= ""
